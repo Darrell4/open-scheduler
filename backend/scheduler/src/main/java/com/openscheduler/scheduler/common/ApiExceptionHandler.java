@@ -1,5 +1,7 @@
 package com.openscheduler.scheduler.common;
 
+import com.openscheduler.scheduler.availability.AvailabilityRuleNotFoundException;
+import com.openscheduler.scheduler.availability.InvalidAvailabilityRuleException;
 import com.openscheduler.scheduler.user.EmailAlreadyInUseException;
 import com.openscheduler.scheduler.user.InvalidTimezoneException;
 import org.springframework.http.HttpStatus;
@@ -22,5 +24,15 @@ public class ApiExceptionHandler {
     @ExceptionHandler(InvalidTimezoneException.class)
     ProblemDetail handleInvalidTimezone(InvalidTimezoneException e) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidAvailabilityRuleException.class)
+    ProblemDetail handleInvalidAvailabilityRule(InvalidAvailabilityRuleException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(AvailabilityRuleNotFoundException.class)
+    ProblemDetail handleAvailabilityRuleNotFound(AvailabilityRuleNotFoundException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
     }
 }
