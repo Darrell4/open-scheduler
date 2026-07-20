@@ -16,4 +16,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
      */
     boolean existsByEventTypeIdAndStatusAndStartAtLessThanAndEndAtGreaterThan(
             Long eventTypeId, BookingStatus status, Instant end, Instant start);
+
+    /**
+     * All bookings of an owner (across all event types) overlapping a range.
+     * A booking on any event type makes the owner busy for that time.
+     */
+    List<Booking> findAllByEventTypeUserIdAndStatusAndStartAtLessThanAndEndAtGreaterThan(
+            Long userId, BookingStatus status, Instant end, Instant start);
 }
